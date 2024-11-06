@@ -20,3 +20,14 @@ def filter_above_threshold(d, threshold):
     print(result)
 
 filter_above_threshold(data2,5)
+
+data3 = [{1,2,3}, {2,3,4}, {4,5}]
+
+def extract_unique_elements(data4):
+    result = set()
+    for element in data4:
+          for el in element:
+               result.add(el)
+    return result
+
+print(extract_unique_elements(data3))
