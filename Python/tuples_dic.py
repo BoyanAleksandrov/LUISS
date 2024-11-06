@@ -19,5 +19,3 @@ s3.discard(1)
 s3.update([9,8,"a","b"])
 
 print(s3.pop())
-print(s3.pop())
-print(s3.pop())
