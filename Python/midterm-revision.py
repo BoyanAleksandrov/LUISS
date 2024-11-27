@@ -45,3 +45,21 @@ print(f"Barrel capacity is: {my_barrel.capacity}")
 second_ammount = my_barrel.draw(50)
 print(f"Drawn ammount: {second_ammount}")
 print(f"Barrel capacity is: {my_barrel.capacity}")
+
+def first_recursive(l):
+    if len(l) < 3:
+        return 0
+    if l[1] < l[0] and l[1] < l[2]:
+        return l[1] + first_recursive(l[1:])
+    else:
+        return 0 + first_recursive(l[1:])
+    
+print(first_recursive([3,4,5,1,3,2,6]))
+
+def second_recursive(L,K):
+    if len(L) == 0:
+        return L
+    else:
+        return [L[0] - K] + second_recursive(L[1:],K)
+    
+print(second_recursive([], 2))
