@@ -62,4 +62,26 @@ def second_recursive(L,K):
     else:
         return [L[0] - K] + second_recursive(L[1:],K)
     
-print(second_recursive([], 2))
+print(second_recursive([2,12,3,7], 2))
+
+class Match:
+    def __init__(self, home_team, away_team):
+        self.home_team = home_team
+        self.away_team = away_team
+        self.home_score = 0
+        self.away_score = 0
+    def goal(self, team):
+        if team == self.home_team:
+            self.home_score += 1
+        elif team == self.away_team:
+            self.away_score += 1
+    def get_score(self):
+        return (self.home_team, self.home_score, self.away_team, self.away_score)
+    
+
+match = Match("Team A", "Team B")
+match.goal("Team A") 
+match.goal("Team B") 
+match.goal("Team A") 
+score = match.get_score() 
+print(f"{score[0]} {score[1]} - {score[2]} {score[3]}")
