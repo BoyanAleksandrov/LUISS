@@ -1,16 +1,9 @@
 import csv
+import pickle
 
-result_dict = dict()
 names_genres_dict = dict()
-test_dict = dict()
-
-with open("genres_table.csv", mode="r") as csvfile:
-    reader = csv.DictReader(csvfile)
-
-    for row in reader:
-        id = row['id']
-        result_dict[id] = []
-
+genre_stats = dict()
+result_dict = dict()
 
 
 with open("genres_table.csv", mode="r") as csvfile:
@@ -20,33 +13,44 @@ with open("genres_table.csv", mode="r") as csvfile:
         genre = row['genres']
         id = row['id']
        
-        if id not in result_dict:
-            result_dict[id] = [genre]
+        if id not in names_genres_dict:
+            names_genres_dict[id] = {"genre/s":[genre], "keyword/s":0}
         else:
-            result_dict[id].append(genre)
+            names_genres_dict[id]["genre/s"].append(genre)
     
         
 with open("keywords_table.csv", encoding="utf-8") as csvfile:
     reader = csv.DictReader(csvfile)
+    
     for row in reader:
         id = row['id']
         keyword = row['keywords']
+        
         if id not in names_genres_dict:
-            names_genres_dict.setdefault(id, 1)
+            names_genres_dict[id] = {"genre/s": [], "keyword/s": 1}
         else:
-            names_genres_dict[id] = names_genres_dict[id] + 1
-
-
-for el in result_dict.values():
-    for val in el:
-        if val not in test_dict:
-            test_dict.setdefault(val, 0)
-for tr in names_genres_dict.keys():
-    if tr in result_dict:
-        for it in result_dict[tr]:
-            if it in test_dict:
-                test_dict[it] = test_dict[it] + names_genres_dict[tr]
+            names_genres_dict[id]["keyword/s"] += 1
 
 
 
-print(test_dict)
+for movie_data in names_genres_dict.values():
+    genres = movie_data["genre/s"]
+    keywords = movie_data["keyword/s"]
+    
+    for genre in genres:
+        if genre not in genre_stats:
+            genre_stats[genre] = {"movie_count": 0, "total_keywords": 0}
+        
+        # Update stats for the genre
+        genre_stats[genre]["movie_count"] += 1
+        genre_stats[genre]["total_keywords"] += keywords
+
+# Compute average keywords per movie for each genre
+
+
+   
+
+with open("second_query.pkl", "wb") as f:
+    for genre, stats in genre_stats.items():
+        result_dict[genre] = round(stats["total_keywords"] / stats["movie_count"], 1)
+    pickle.dump(result_dict, f)
