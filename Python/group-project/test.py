@@ -1,6 +1,6 @@
 import pickle
 
-with open("second_query.pkl", "rb") as f:
+with open("query2.pkl", "rb") as f:
 
     loaded_dict = pickle.load(f)
 

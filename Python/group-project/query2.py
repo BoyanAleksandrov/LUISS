@@ -41,11 +41,24 @@ for movie_data in names_genres_dict.values():
         if genre not in genre_stats:
             genre_stats[genre] = {"movie_count": 0, "total_keywords": 0}
         
+        # Update stats for the genre
         genre_stats[genre]["movie_count"] += 1
         genre_stats[genre]["total_keywords"] += keywords
+
+# Compute average keywords per movie for each genre
+
+
    
 
-with open("second_query.pkl", "wb") as f:
+with open("query2.pkl", "wb") as f:
     for genre, stats in genre_stats.items():
         result_dict[genre] = round(stats["total_keywords"] / stats["movie_count"], 1)
     pickle.dump(result_dict, f)
+
+    
+print("Names_genres_dict:")
+print(names_genres_dict)
+print("genre_stats:")
+print(genre_stats)
+print("result_dict:")
+print(result_dict)
